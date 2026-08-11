@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Rosa - Login & Perfil</title>
+    <style>
+        :root {
+            --primary-pink: #ff69b4;
+            --light-pink: #ffb6c1;
+            --soft-pink: #fff0f5;
+            --dark-pink: #c71585;
+            --white: #ffffff;
+            --gray-text: #555555;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--soft-pink);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: var(--white);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.2);
+            width: 100%;
+            max-width: 400px;
+            border: 2px solid var(--light-pink);
+        }
+
+        h2 {
+            color: var(--dark-pink);
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: var(--dark-pink);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--light-pink);
+            border-radius: 10px;
+            outline: none;
+            transition: 0.3s;
+            background-color: #fff9fb;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            border-color: var(--primary-pink);
+            box-shadow: 0 0 5px rgba(255, 105, 180, 0.5);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-pink);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: var(--dark-pink);
+        }
+
+        #profile-view {
+            display: none;
+            text-align: center;
+        }
+
+        .avatar-preview {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary-pink);
+            margin: 0 auto 15px auto;
+            display: block;
+            background-color: var(--light-pink);
+        }
+
+        /* Estilo das estatísticas estilo rede social */
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            background-color: var(--soft-pink);
+            padding: 15px 10px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px dashed var(--primary-pink);
+        }
+
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-box span {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--dark-pink);
+        }
+
+        .stat-box p {
+            font-size: 0.8rem;
+            color: var(--gray-text);
+            margin-top: 2px;
+        }
+
+        .btn-logout {
+            background-color: #ff477e;
+        }
+
+        .btn-logout:hover {
+            background-color: #d93868;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- FORMULÁRIO DE LOGIN / CADASTRO -->
+        <div id="login-view">
+            <h2>🌸 Bem-Vindo(a) 🌸</h2>
+            <form id="userForm">
+                <div class="form-group">
+                    <label for="name">Nome Completo</label>
+                    <input type="text" id="name" required placeholder="Digite seu nome">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" required placeholder="seu@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" required placeholder="Sua senha secreta">
+                </div>
+
+                <div class="form-group">
+                    <label for="avatar">Foto de Perfil</label>
+                    <input type="file" id="avatar" accept="image/*" required>
+                </div>
+
+                <button type="submit">Entrar / Cadastrar</button>
+            </form>
+        </div>
+
+        <!-- PAINEL DE PERFIL DO USUÁRIO -->
+        <div id="profile-view">
+            <h2 id="profileTitle">✨ Perfil ✨</h2>
+            
+            <img id="displayAvatar" class="avatar-preview" src="" alt="Foto de Perfil">
+            
+            <div class="stats-container">
+                <div class="stat-box">
+                    <span id="statPosts">12</span>
+                    <p>Posts</p>
+                </div>
+                <div class="stat-box">
+                    <span id="statLikes">1.4k</span>
+                    <p>Curtidas</p>
+                </div>
+                <div class="stat-box">
+                    <span id="statFollowing">248</span>
+                    <p>Seguindo</p>
+                </div>
+                <div class="stat-box">
+                    <span id="statFollowers">532</span>
+                    <p>Seguidores</p>
+                </div>
+            </div>
+
+            <button class="btn-logout" id="logoutBtn">Sair</button>
+        </div>
+    </div>
+
+    <script>
+        const userForm = document.getElementById('userForm');
+        const loginView = document.getElementById('login-view');
+        const profileView = document.getElementById('profile-view');
+        
+        const profileTitle = document.getElementById('profileTitle');
+        const displayAvatar = document.getElementById('displayAvatar');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        userForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const avatarFile = document.getElementById('avatar').files[0];
+
+            // Define o nome do usuário no título do perfil
+            profileTitle.textContent = `✨ ${name} ✨`;
+
+            if (avatarFile) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    displayAvatar.src = event.target.result;
+                    
+                    loginView.style.display = 'none';
+                    profileView.style.display = 'block';
+                }
+                reader.readAsDataURL(avatarFile);
+            } else {
+                loginView.style.display = 'none';
+                profileView.style.display = 'block';
+            }
+        });
+
+        logoutBtn.addEventListener('click', function() {
+            userForm.reset();
+            displayAvatar.src = "";
+            profileView.style.display = 'none';
+            loginView.style.display = 'block';
+        });
+    </script>
+
+</body>
+</html>
